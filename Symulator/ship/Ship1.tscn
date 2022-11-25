@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ship/ship.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 14.3568, 1.03108, 0.378966 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 12.2728, 1.75633, 2.80729 )
+
+[node name="Ship" type="VehicleBody"]
+
+[node name="ship" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0471611, -2.69632, 0.00950432 )
+mesh = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35638, -0.847092, -0.0986514 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95664, 0 )
+shape = SubResource( 3 )

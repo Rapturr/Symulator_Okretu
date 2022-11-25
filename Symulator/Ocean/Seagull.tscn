@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Ocean/Seagull.gd" type="Script" id=1]
+
+[node name="Seagull" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Front" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Front"]
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0
+
+[node name="Rear" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Rear"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0
+
+[node name="Left" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Left"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0
+
+[node name="Right" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Right"]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0 )
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0
+
+[node name="Top" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+
+[node name="Camera" type="Camera" parent="Top"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0
+
+[node name="Bottom" type="Viewport" parent="."]
+size = Vector2( 512, 512 )
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="Bottom"]
+transform = Transform( 1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0 )
+current = true
+fov = 90.0
+near = 0.9
+far = 1.0

@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ship/ship.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://ship/ShipRB.gd" type="Script" id=2]
+[ext_resource path="res://ship/Buoy.tscn" type="PackedScene" id=3]
+
+[sub_resource type="ConvexPolygonShape" id=2]
+points = PoolVector3Array( 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+
+[sub_resource type="ConvexPolygonShape" id=1]
+points = PoolVector3Array( -16.7526, 8.03835, -5.35989, 0.975448, 49.0959, 1.51788, 10.7737, 42.0268, 0.34436, -1.14902, 12.9967, 11.3629, 35.879, 13.0112, -0.437245, -0.203371, 23.9964, -11.0301, -21.3813, 0.0679893, 0.34436, 18.2317, 0.855047, 0.34436, -10.2496, 40.3601, 3.96987, -12.3056, 34.5201, -6.40755, -1.38219, 24.3852, 11.7188, -1.14786, 12.9986, -10.6724, -12.7502, 24.7739, 9.7548, -23.7389, 11.4467, -1.2233, 0.193459, 48.304, 4.65544, 10.3768, 40.0735, -3.18288, 35.879, 13.7935, 0.34436, -12.7502, 24.7739, -8.67639, -1.76735, 35.7591, -8.28447, -6.1143, 4.58849, -5.3667, 10.3768, 40.0735, 3.8716, 1.7516, 21.6401, 11.7188, 3.7989, 5.0798, 5.64516, -10.2733, 40.3831, -3.28643, -18.5456, 8.11124, 4.50962, 0.584454, 48.7024, -0.437245, 1.7516, 21.6401, -11.0301, -11.5772, 16.1451, -9.06608, -11.6936, 34.1891, 6.87139, -1.76735, 35.7591, 8.97319, 3.79867, 4.69772, -5.3355, -12.0326, 7.03667, -6.6723, 13.5895, 5.97073, -3.79091, -23.0502, 8.68406, 1.10791, -12.2046, 6.11438, 6.05483, -11.424, 16.0125, 9.09166, 0.584454, 34.5881, 8.97319, 0.584454, 34.5881, -8.28447, -19.2251, 7.91222, -4.25209, 2.14843, 20.0756, 11.7188, -6.14225, 4.54262, 5.30559, -1.38219, 24.3852, -11.0301, 2.14843, 20.4643, -11.0301, 13.616, 0.997263, -0.407616, -0.197536, 43.2074, -3.96672, 1.36644, 22.4271, 11.7188, -12.2167, 6.86223, 6.43942, 2.6703, 5.51011, -6.07339, 1.36644, 22.4271, -11.0301, -9.93362, 5.71734, 6.05935, -17.8059, 8.09668, 4.88995, -4.5057, 5.51011, -6.07339, -11.5772, 23.6029, -9.06608, 10.0401, 22.5956, 8.29849, -23.0019, 8.71043, -1.18455, -0.203371, 23.9964, 11.7188 )
+
+[node name="Ship" type="RigidBody"]
+mass = 1.49082
+script = ExtResource( 2 )
+
+[node name="ship" type="MeshInstance" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, -3.9206, 0 )
+mesh = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, -3.9206, 0 )
+shape = SubResource( 2 )
+
+[node name="ShipCollisionconvShape" type="CollisionShape" parent="."]
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, -3.9206, 0 )
+shape = SubResource( 1 )
+
+[node name="Buoy" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.66999, -0.426848, 14.5233 )
+
+[node name="Buoy2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.06499, -0.416748, -17.4244 )
+
+[node name="Buoy3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57381, -0.426848, 14.5233 )
+
+[node name="Buoy4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55534, -0.426848, -17.5189 )
+
+[node name="Buoy5" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.62819, -1.53083, 8.91583 )
+
+[node name="Buoy6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04802, -0.27783, -14.8946 )
+
+[node name="Buoy7" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.49843, -1.74898, 8.91583 )
+
+[node name="Buoy10" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.39044, -1.48723, 0.784298 )
+
+[node name="Buoy9" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.52063, -1.26227, 0.775007 )
+
+[node name="Buoy8" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6155, -0.131989, -14.5583 )
