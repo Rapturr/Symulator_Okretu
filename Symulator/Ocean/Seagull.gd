@@ -9,7 +9,7 @@ func ready():
 func update_cube_map():
 	var images = {
 		'Front': CubeMap.SIDE_FRONT,
-		'Rear': CubeMap.SIDE_BACK,
+		'Back': CubeMap.SIDE_BACK,
 		'Left': CubeMap.SIDE_LEFT,
 		'Right': CubeMap.SIDE_RIGHT,
 		'Top': CubeMap.SIDE_TOP,

@@ -1,0 +1,136 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Ocean/SimulationSettings.gd" type="Script" id=1]
+
+[node name="SimulationSettings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 398.0
+margin_bottom = 178.0
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 319.0
+margin_bottom = 447.0
+
+[node name="AMP" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_right = 311.0
+margin_bottom = 16.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/AMP"]
+margin_top = 1.0
+margin_right = 79.0
+margin_bottom = 15.0
+text = "AMPLITUDE:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/AMP"]
+margin_left = 83.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="WAVELEN" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 20.0
+margin_right = 311.0
+margin_bottom = 36.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/WAVELEN"]
+margin_top = 1.0
+margin_right = 92.0
+margin_bottom = 15.0
+text = "WAVELENGTH:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/WAVELEN"]
+margin_left = 96.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="ST" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 40.0
+margin_right = 311.0
+margin_bottom = 56.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/ST"]
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 15.0
+text = "STEEPNESS:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/ST"]
+margin_left = 75.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="WINDX" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 60.0
+margin_right = 311.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/WINDX"]
+margin_top = 1.0
+margin_right = 50.0
+margin_bottom = 15.0
+text = "WINDX:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/WINDX"]
+margin_left = 54.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="WINDY" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 80.0
+margin_right = 311.0
+margin_bottom = 96.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/WINDY"]
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 15.0
+text = "STEEPNESS:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/WINDY"]
+margin_left = 75.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="WINDALIGNMENT" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 100.0
+margin_right = 311.0
+margin_bottom = 116.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/WINDALIGNMENT"]
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 15.0
+text = "STEEPNESS:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/WINDALIGNMENT"]
+margin_left = 75.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="SPEED" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 120.0
+margin_right = 311.0
+margin_bottom = 136.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/SPEED"]
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 15.0
+text = "STEEPNESS:"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/SPEED"]
+margin_left = 75.0
+margin_right = 311.0
+margin_bottom = 16.0
+size_flags_horizontal = 3

@@ -1,50 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Ocean/Waves.gd" type="Script" id=1]
-[ext_resource path="res://Ocean/Seagull.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Ocean/waves_shader.tres" type="Shader" id=3]
-[ext_resource path="res://Ocean/noise_tileable.png" type="Texture" id=4]
-
-[sub_resource type="CubeMap" id=2]
-
-[sub_resource type="Image" id=5]
-data = {
-"data": PoolByteArray( 34, 172, 77, 62, 21, 86, 221, 58, 190, 52, 125, 191, 25, 224, 22, 62, 60, 143, 253, 61, 198, 154, 231, 62, 117, 59, 68, 57, 40, 75, 131, 62, 157, 112, 119, 63, 78, 245, 168, 61, 22, 10, 89, 62, 194, 196, 208, 59, 208, 7, 119, 63, 122, 87, 134, 62, 148, 212, 246, 61, 108, 151, 214, 62, 162, 172, 13, 60, 78, 120, 61, 63, 136, 39, 44, 63, 50, 135, 175, 61, 50, 126, 189, 62, 213, 177, 152, 59, 227, 242, 42, 63, 246, 142, 62, 191, 139, 202, 186, 61, 226, 151, 156, 62, 112, 127, 225, 57, 163, 211, 99, 191, 240, 128, 233, 190, 125, 122, 205, 61, 80, 196, 243, 62, 217, 117, 145, 59, 10, 146, 115, 63, 143, 153, 157, 62, 123, 176, 164, 61, 176, 249, 67, 62, 83, 184, 228, 59, 113, 220, 127, 63, 51, 234, 6, 61, 228, 224, 1, 62, 75, 185, 174, 62, 13, 97, 226, 59, 163, 42, 24, 191, 7, 222, 77, 191, 145, 134, 194, 61, 136, 192, 214, 62, 5, 239, 201, 59, 253, 93, 83, 191, 255, 109, 16, 191, 100, 118, 175, 61 ),
-"format": "RFloat",
-"height": 10,
-"mipmaps": false,
-"width": 5
-}
-
-[sub_resource type="ImageTexture" id=4]
-flags = 0
-flags = 0
-image = SubResource( 5 )
-size = Vector2( 5, 10 )
-
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
-shader_param/noise_params = null
-shader_param/water_color = Color( 0.219608, 0.47451, 0.6, 1 )
-shader_param/project_bias = 1.2
-shader_param/time_offset = 11698.7
-shader_param/waves = SubResource( 4 )
-shader_param/noise = ExtResource( 4 )
-shader_param/environment = SubResource( 2 )
+[ext_resource path="res://Ocean/waves_shader.tres" type="Material" id=3]
+[ext_resource path="res://ship/ShipRB.tscn" type="PackedScene" id=5]
 
 [node name="ShipSimWorld" type="Node"]
 
-[node name="Seagull" parent="." instance=ExtResource( 2 )]
-visible = false
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.417027, 0.908894, 0, -0.908894, -0.417027, 0, 57.3558, 0 )
 
 [node name="Waves" type="ImmediateGeometry" parent="."]
-material_override = SubResource( 1 )
+material_override = ExtResource( 3 )
 script = ExtResource( 1 )
 wavelength = 50.0
+wind_align = 0.12
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.96509, 0.26192, 0, -0.26192, 0.96509, 0, 9.09415, 0 )
-current = true
-
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 77.766, 0 )
+[node name="Ship" parent="." instance=ExtResource( 5 )]

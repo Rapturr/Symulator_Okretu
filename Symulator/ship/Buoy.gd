@@ -1,8 +1,6 @@
 extends RigidBody
 
-onready var ocean = get_parent().get_parent().get_node('Ocean')
-#get_node('Ocean')
-
+onready var ocean = get_parent().get_parent().get_node('Waves')
 
 var depth_before_submerged = 1.0
 var displacement_amount = 3.0
@@ -14,9 +12,7 @@ export var water_angular_drag = 0.5
 
 export var enabled = true
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	# How many floater children does the parent have?
 	for c in get_parent().get_children():
 		if c.get_script() == get_script():
 			floater_count += 1

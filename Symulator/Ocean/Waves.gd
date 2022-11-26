@@ -17,7 +17,7 @@ export(float) var noise_speed = 0.48 setget set_noise_speed
 
 export(int) var seed_value = 0 setget set_seed
 
-var res = 100.0
+var res = 124.0
 var initialized = false
 
 var counter = 0.5
