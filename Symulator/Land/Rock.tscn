@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.27451, 0.247059, 0.258824, 1 )
+
+[sub_resource type="SphereMesh" id=2]
+radial_segments = 6
+rings = 5
+
+[node name="Rock" type="MeshInstance"]
+transform = Transform( 4, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0 )
+material_overlay = SubResource( 1 )
+mesh = SubResource( 2 )

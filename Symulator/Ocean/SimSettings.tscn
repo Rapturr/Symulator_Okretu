@@ -1,0 +1,140 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Ocean/SimulationSettings.gd" type="Script" id=1]
+[ext_resource path="res://Ocean/busola.png" type="Texture" id=2]
+
+[node name="SimSettings" type="Panel"]
+margin_right = 282.0
+margin_bottom = 131.0
+script = ExtResource( 1 )
+
+[node name="VBP" type="VBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 274.0
+margin_bottom = 129.0
+
+[node name="WAVEHEIGHT" type="HBoxContainer" parent="VBP"]
+margin_right = 266.0
+margin_bottom = 16.0
+
+[node name="Label" type="Label" parent="VBP/WAVEHEIGHT"]
+margin_top = 1.0
+margin_right = 95.0
+margin_bottom = 15.0
+text = "WAVE-HEIGHT:"
+
+[node name="HSlider" type="HSlider" parent="VBP/WAVEHEIGHT"]
+margin_left = 99.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.001
+value = 0.25
+
+[node name="DISTANCE" type="HBoxContainer" parent="VBP"]
+margin_top = 20.0
+margin_right = 266.0
+margin_bottom = 36.0
+
+[node name="Label" type="Label" parent="VBP/DISTANCE"]
+margin_top = 1.0
+margin_right = 92.0
+margin_bottom = 15.0
+text = "WAVELENGTH:"
+
+[node name="HSlider" type="HSlider" parent="VBP/DISTANCE"]
+margin_left = 96.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = 10.0
+value = 10.0
+
+[node name="ST" type="HBoxContainer" parent="VBP"]
+margin_top = 40.0
+margin_right = 266.0
+margin_bottom = 56.0
+
+[node name="Label" type="Label" parent="VBP/ST"]
+margin_top = 1.0
+margin_right = 71.0
+margin_bottom = 15.0
+text = "STEEPNESS:"
+
+[node name="HSlider" type="HSlider" parent="VBP/ST"]
+margin_left = 75.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 0.7
+step = 0.01
+
+[node name="WINDX" type="HBoxContainer" parent="VBP"]
+margin_top = 60.0
+margin_right = 266.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="VBP/WINDX"]
+margin_top = 1.0
+margin_right = 55.0
+margin_bottom = 15.0
+text = "WIND-X:"
+
+[node name="HSlider" type="HSlider" parent="VBP/WINDX"]
+margin_left = 59.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="WINDY" type="HBoxContainer" parent="VBP"]
+margin_top = 80.0
+margin_right = 266.0
+margin_bottom = 96.0
+
+[node name="Label" type="Label" parent="VBP/WINDY"]
+margin_top = 1.0
+margin_right = 54.0
+margin_bottom = 15.0
+text = "WIND-Y:"
+
+[node name="HSlider" type="HSlider" parent="VBP/WINDY"]
+margin_left = 58.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="WINDALIGNMENT" type="HBoxContainer" parent="VBP"]
+margin_top = 100.0
+margin_right = 266.0
+margin_bottom = 116.0
+
+[node name="Label" type="Label" parent="VBP/WINDALIGNMENT"]
+margin_top = 1.0
+margin_right = 119.0
+margin_bottom = 15.0
+text = "WINDALIGNMENT:"
+
+[node name="HSlider" type="HSlider" parent="VBP/WINDALIGNMENT"]
+margin_left = 123.0
+margin_right = 266.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="Windmeter" type="TextureRect" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 132.0
+margin_right = 257.0
+margin_bottom = 388.0
+texture = ExtResource( 2 )

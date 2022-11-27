@@ -3,19 +3,11 @@ extends ImmediateGeometry
 
 const NUMBER_OF_WAVES = 10;
 
-export(float, 0, 10000) var wavelength = 60.0 setget set_wavelength
-export(float, 0, 1) var steepness = 0.01 setget set_steepness
-export(float, 0, 10000) var amplitude = 0.25 setget set_amplitude
-export(Vector2) var wind_direction = Vector2(1, 0) setget set_wind_direction
+export(float, 0, 100) var amplitude = 1.0 setget setHeight
+export(float, 0, 100) var wavelength = 10.0 setget setWavelength
+export(float, 0, 1) var steepness = 0.1 setget set_steepness
+export(Vector2) var windDirection = Vector2(1, 0) setget setWindDirection
 export(float, 0, 1) var wind_align = 0.0 setget set_wind_align
-export(float) var speed = 10.0 setget set_speed
-
-export(bool) var noise_enabled = true setget set_noise_enabled
-export(float) var noise_amplitude = 0.28 setget set_noise_amplitude
-export(float) var noise_frequency = 0.065 setget set_noise_frequency
-export(float) var noise_speed = 0.48 setget set_noise_speed
-
-export(int) var seed_value = 0 setget set_seed
 
 var res = 124.0
 var initialized = false
@@ -63,10 +55,10 @@ func _process(delta):
 		material_override.set_shader_param('environment', cube_map)
 		counter = INF
 	
-	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * speed)
+	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * 10)
 	initialized = true
 
-func set_wavelength(value):
+func setWavelength(value):
 	wavelength = value
 	if initialized:
 		update_waves()
@@ -76,13 +68,13 @@ func set_steepness(value):
 	if initialized:
 		update_waves()
 
-func set_amplitude(value):
+func setHeight(value):
 	amplitude = value
 	if initialized:
 		update_waves()
 
-func set_wind_direction(value):
-	wind_direction = value
+func setWindDirection(value):
+	windDirection = value
 	if initialized:
 		update_waves()
 
@@ -90,39 +82,6 @@ func set_wind_align(value):
 	wind_align = value
 	if initialized:
 		update_waves()
-
-func set_seed(value):
-	seed_value = value
-	if initialized:
-		update_waves()
-
-func set_speed(value):
-	speed = value
-	material_override.set_shader_param('speed', value)
-
-func set_noise_enabled(value):
-	noise_enabled = value
-	var old_noise_params = material_override.get_shader_param('noise_params')
-	old_noise_params.d = 1 if value else 0
-	material_override.set_shader_param('noise_params', old_noise_params)
-
-func set_noise_amplitude(value):
-	noise_amplitude = value
-	var old_noise_params = material_override.get_shader_param('noise_params')
-	old_noise_params.x = value
-	material_override.set_shader_param('noise_params', old_noise_params)
-
-func set_noise_frequency(value):
-	noise_frequency = value
-	var old_noise_params = material_override.get_shader_param('noise_params')
-	old_noise_params.y = value
-	material_override.set_shader_param('noise_params', old_noise_params)
-
-func set_noise_speed(value):
-	noise_speed = value
-	var old_noise_params = material_override.get_shader_param('noise_params')
-	old_noise_params.z = value
-	material_override.set_shader_param('noise_params', old_noise_params)
 
 func get_displace(position, weight=1):
 	
@@ -135,41 +94,37 @@ func get_displace(position, weight=1):
 		printerr('Position is not a vector3!')
 		breakpoint
 	
-	var w; var amp; var steep; var phase; var dir
+	var hz; var amp; var steep; var phase; var dir
 	for i in waves:
 		amp = i['amplitude']
 		if amp == 0.0: continue
 		
 		dir = Vector2(i['wind_directionX'], i['wind_directionY'])
-		w = i['frequency']
-		steep = i['steepness'] / (w*amp)
-		phase = 2.0 * w
+		hz = i['frequency']
+		steep = i['steepness'] / (hz*amp)
+		phase = 2.0 * hz
 		
-		var W = position.dot(w*dir) + phase * OS.get_ticks_msec()/1000.0 * speed
+		var W = position.dot(hz*dir) + phase * OS.get_ticks_msec()/1000.0 * 10
 		
 		new_p.x += steep*amp * dir.x * cos(W) / weight
 		new_p.z += steep*amp * dir.y * cos(W) / weight
 		new_p.y += amp * sin(W)
 	return new_p;
 
-func get_wind():
-	return Vector2(0,0)
-
 func update_waves():
-	#Generate Waves..
-	seed(seed_value)
-	var amp_length_ratio = amplitude / wavelength
+	seed(0)
+	#var amp_length_ratio = amplitude / wavelength
 	waves.clear()
 	for i in range(NUMBER_OF_WAVES):
-		var _wavelength = rand_range(wavelength/2.0, wavelength*2.0)
-		var _wind_direction = wind_direction.rotated(rand_range(-PI, PI)*(1-wind_align))
+		var _Wavelength = rand_range(wavelength/2.0, wavelength*2.0)
+		var _windDirection = windDirection.rotated(rand_range(-PI, PI)*(1-wind_align))
 		
 		waves.append({
-			'amplitude': amp_length_ratio * _wavelength,
+			'amplitude': amplitude / wavelength * _Wavelength,
 			'steepness': rand_range(0, steepness),
-			'wind_directionX': _wind_direction.x,
-			'wind_directionY': _wind_direction.y,
-			'frequency': sqrt(0.098 * TAU/_wavelength)
+			'wind_directionX': _windDirection.x,
+			'wind_directionY': _windDirection.y,
+			'frequency': sqrt(0.098 * TAU/_Wavelength)
 		})
 	#Put Waves in Texture..
 	var img = Image.new()
@@ -183,5 +138,4 @@ func update_waves():
 		img.set_pixel(4, i, Color(waves[i]['frequency'], 0,0,0))
 	img.unlock()
 	waves_in_tex.create_from_image(img, 0)
-	
 	material_override.set_shader_param('waves', waves_in_tex)

@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Ocean/Waves.gd" type="Script" id=1]
+[ext_resource path="res://Ocean/SimSettings.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Ocean/waves_shader.tres" type="Material" id=3]
+[ext_resource path="res://Land/Rock.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ship/ShipRB.tscn" type="PackedScene" id=5]
 
 [node name="ShipSimWorld" type="Node"]
@@ -12,7 +14,17 @@ transform = Transform( 1, 0, 0, 0, -0.417027, 0.908894, 0, -0.908894, -0.417027,
 [node name="Waves" type="ImmediateGeometry" parent="."]
 material_override = ExtResource( 3 )
 script = ExtResource( 1 )
+amplitude = 0.1
 wavelength = 50.0
+steepness = 0.01
 wind_align = 0.12
 
 [node name="Ship" parent="." instance=ExtResource( 5 )]
+
+[node name="SimSettings" parent="." instance=ExtResource( 2 )]
+
+[node name="Rock" parent="." instance=ExtResource( 4 )]
+transform = Transform( 8, 0, 0, 0, 10, 0, 0, 0, 8, 15.9634, -4.2971, 173 )
+
+[node name="Rock2" parent="." instance=ExtResource( 4 )]
+transform = Transform( 10, 0, 0, 0, 15, 0, 0, 0, 10, -41.4185, -4.2971, 116.413 )
