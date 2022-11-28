@@ -1,9 +1,9 @@
 tool
 extends ImmediateGeometry
 
-const NUMBER_OF_WAVES = 10;
+const WAVESNUM = 10;
 
-export(float, 0, 1) var amplitude = 1.0 setget setHeight
+export(float, 0, 1) var waveheight = 1.0 setget setHeight
 export(float, 10, 100) var wavelength = 10.0 setget setWavelength
 export(float, 0, 1) var steepness = 0.1 setget set_steepness
 export(Vector2) var windDirection = Vector2(1, 0) setget setWindDirection
@@ -17,7 +17,7 @@ var cube_cam = preload("res://Ocean/Seagull.tscn")
 var cube_cam_inst;
 
 var waves = []
-var waves_in_tex = ImageTexture.new()
+var waveTexture = ImageTexture.new()
 
 func _ready():
 	
@@ -41,8 +41,8 @@ func _ready():
 	add_vertex(Vector3(1,1,1)*pow(2,32))
 	end()
 	
-	waves_in_tex = ImageTexture.new()
-	update_waves()
+	waveTexture = ImageTexture.new()
+	updateWaves()
 	
 	cube_cam_inst = cube_cam.instance()
 	add_child(cube_cam_inst)
@@ -61,29 +61,29 @@ func _process(delta):
 func setWavelength(value):
 	wavelength = value
 	if setable:
-		update_waves()
+		updateWaves()
 
 func set_steepness(value):
 	steepness = value
 	if setable:
-		update_waves()
+		updateWaves()
 
 func setHeight(value):
-	amplitude = value
+	waveheight = value
 	if setable:
-		update_waves()
+		updateWaves()
 
 func setWindDirection(value):
 	windDirection = value
 	if setable:
-		update_waves()
+		updateWaves()
 
 func set_wind_align(value):
 	wind_align = value
 	if setable:
-		update_waves()
+		updateWaves()
 
-func get_displace(position):
+func movedByWave(position):
 	var dispPosition = Vector3.ZERO
 	
 	var hz
@@ -91,7 +91,7 @@ func get_displace(position):
 	var steep
 	var dir
 	for i in waves:
-		ht = i['amplitude']
+		ht = i['waveheight']
 		if ht == 0.0: continue
 		
 		dir = Vector2(i['wind_directionX'], i['wind_directionY'])
@@ -105,31 +105,29 @@ func get_displace(position):
 					ht * sin(W), position.z + dir.y * cos(W) * ht * steep)
 	return dispPosition;
 
-func update_waves():
+func updateWaves():
 	seed(0)
-	#var amp_length_ratio = amplitude / wavelength
 	waves.clear()
-	for _i in range(NUMBER_OF_WAVES):
-		var _Wavelength = rand_range(wavelength/2.0, wavelength*2.0)
-		var _windDirection = windDirection.rotated(rand_range(-PI, PI)*(1-wind_align))
+	for _i in range(WAVESNUM):
+		var randWavelen = rand_range(wavelength/2.0, wavelength*2.0)
+		var rotWindDir = windDirection.rotated(rand_range(-PI, PI)*(1-wind_align))
 		
 		waves.append({
-			'amplitude': amplitude / wavelength * _Wavelength,
+			'waveheight': waveheight / wavelength * randWavelen,
 			'steepness': rand_range(0, steepness),
-			'wind_directionX': _windDirection.x,
-			'wind_directionY': _windDirection.y,
-			'frequency': sqrt(0.098 * TAU/_Wavelength)
+			'wind_directionX': rotWindDir.x,
+			'wind_directionY': rotWindDir.y,
+			'frequency': sqrt(0.098 * TAU/randWavelen)
 		})
-	#Put Waves in Texture..
-	var img = Image.new()
-	img.create(5, NUMBER_OF_WAVES, false, Image.FORMAT_RF)
-	img.lock()
-	for i in range(NUMBER_OF_WAVES):
-		img.set_pixel(0, i, Color(waves[i]['amplitude'], 0,0,0))
-		img.set_pixel(1, i, Color(waves[i]['steepness'], 0,0,0))
-		img.set_pixel(2, i, Color(waves[i]['wind_directionX'], 0,0,0))
-		img.set_pixel(3, i, Color(waves[i]['wind_directionY'], 0,0,0))
-		img.set_pixel(4, i, Color(waves[i]['frequency'], 0,0,0))
-	img.unlock()
-	waves_in_tex.create_from_image(img, 0)
-	material_override.set_shader_param('waves', waves_in_tex)
+	var image = Image.new()
+	image.create(5, WAVESNUM, false, Image.FORMAT_RF)
+	image.lock()
+	for i in range(WAVESNUM):
+		image.set_pixel(0, i, Color(waves[i]['waveheight'], 0,0,0))
+		image.set_pixel(1, i, Color(waves[i]['steepness'], 0,0,0))
+		image.set_pixel(2, i, Color(waves[i]['wind_directionX'], 0,0,0))
+		image.set_pixel(3, i, Color(waves[i]['wind_directionY'], 0,0,0))
+		image.set_pixel(4, i, Color(waves[i]['frequency'], 0,0,0))
+	image.unlock()
+	waveTexture.create_from_image(image, 0)
+	material_override.set_shader_param('waves', waveTexture)

@@ -14,7 +14,6 @@ transform = Transform( 1, 0, 0, 0, -0.417027, 0.908894, 0, -0.908894, -0.417027,
 [node name="Waves" type="ImmediateGeometry" parent="."]
 material_override = ExtResource( 3 )
 script = ExtResource( 1 )
-amplitude = 0.1
 wavelength = 50.0
 steepness = 0.01
 wind_align = 0.12
