@@ -3,14 +3,14 @@ extends ImmediateGeometry
 
 const NUMBER_OF_WAVES = 10;
 
-export(float, 0, 100) var amplitude = 1.0 setget setHeight
-export(float, 0, 100) var wavelength = 10.0 setget setWavelength
+export(float, 0, 1) var amplitude = 1.0 setget setHeight
+export(float, 10, 100) var wavelength = 10.0 setget setWavelength
 export(float, 0, 1) var steepness = 0.1 setget set_steepness
 export(Vector2) var windDirection = Vector2(1, 0) setget setWindDirection
 export(float, 0, 1) var wind_align = 0.0 setget set_wind_align
 
 var res = 124.0
-var initialized = false
+var setable = false
 
 var counter = 0.5
 var cube_cam = preload("res://Ocean/Seagull.tscn")
@@ -28,12 +28,12 @@ func _ready():
 		for i in range(res):
 			var x = i/res - 0.5
 			
-			var new_x = x 
-			var new_y = y
+			#var new_x = x 
+			#var new_y = y
 			
 			add_vertex(Vector3(x*2, 0, -y*2))
 			
-			new_y = n_y - translation.z
+			#new_y = n_y - translation.z
 			add_vertex(Vector3(x*2, 0, -n_y*2))
 		end()
 	begin(Mesh.PRIMITIVE_POINTS)
@@ -56,66 +56,60 @@ func _process(delta):
 		counter = INF
 	
 	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * 10)
-	initialized = true
+	setable = true
 
 func setWavelength(value):
 	wavelength = value
-	if initialized:
+	if setable:
 		update_waves()
 
 func set_steepness(value):
 	steepness = value
-	if initialized:
+	if setable:
 		update_waves()
 
 func setHeight(value):
 	amplitude = value
-	if initialized:
+	if setable:
 		update_waves()
 
 func setWindDirection(value):
 	windDirection = value
-	if initialized:
+	if setable:
 		update_waves()
 
 func set_wind_align(value):
 	wind_align = value
-	if initialized:
+	if setable:
 		update_waves()
 
-func get_displace(position, weight=1):
+func get_displace(position):
+	var dispPosition = Vector3.ZERO
 	
-	var new_p;
-	if typeof(position) == TYPE_VECTOR3:
-		new_p = Vector3(position.x, 0.0, position.z)
-	elif typeof(position) == TYPE_VECTOR2:
-		new_p = Vector3(position.x, 0.0, position.y)
-	else:
-		printerr('Position is not a vector3!')
-		breakpoint
-	
-	var hz; var amp; var steep; var phase; var dir
+	var hz
+	var ht
+	var steep
+	var dir
 	for i in waves:
-		amp = i['amplitude']
-		if amp == 0.0: continue
+		ht = i['amplitude']
+		if ht == 0.0: continue
 		
 		dir = Vector2(i['wind_directionX'], i['wind_directionY'])
 		hz = i['frequency']
-		steep = i['steepness'] / (hz*amp)
-		phase = 2.0 * hz
+		steep = i['steepness'] / (hz*ht)
 		
-		var W = position.dot(hz*dir) + phase * OS.get_ticks_msec()/1000.0 * 10
+		var pos2D = Vector2(position.x, position.z)
 		
-		new_p.x += steep*amp * dir.x * cos(W) / weight
-		new_p.z += steep*amp * dir.y * cos(W) / weight
-		new_p.y += amp * sin(W)
-	return new_p;
+		var W = pos2D.dot(hz*dir) + hz * 2 * OS.get_ticks_msec()/1000.0 * 10
+		dispPosition = Vector3(position.x + dir.x * cos(W) * ht * steep, 
+					ht * sin(W), position.z + dir.y * cos(W) * ht * steep)
+	return dispPosition;
 
 func update_waves():
 	seed(0)
 	#var amp_length_ratio = amplitude / wavelength
 	waves.clear()
-	for i in range(NUMBER_OF_WAVES):
+	for _i in range(NUMBER_OF_WAVES):
 		var _Wavelength = rand_range(wavelength/2.0, wavelength*2.0)
 		var _windDirection = windDirection.rotated(rand_range(-PI, PI)*(1-wind_align))
 		

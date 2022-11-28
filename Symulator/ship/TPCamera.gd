@@ -9,7 +9,7 @@ var mouse_movable = true
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	if mouse_movable:
 		cameraRotation()

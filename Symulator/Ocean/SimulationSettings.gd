@@ -12,6 +12,4 @@ func _process(_delta):
 			"ST": waves.set_steepness($VBP/ST/HSlider.value)
 			"WINDX": windDir.x = $VBP/WINDX/HSlider.value
 			"WINDY": windDir.y = $VBP/WINDY/HSlider.value
-			"WINDALIGNMENT": waves.set_wind_align($VBP/WINDALIGNMENT/HSlider.value)
 	waves.setWindDirection(windDir)
-	#$Windmeter.rect_rotation = 

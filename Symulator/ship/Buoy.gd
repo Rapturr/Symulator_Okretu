@@ -1,6 +1,6 @@
 extends RigidBody
 
-onready var ocean = get_parent().get_parent().get_node('Waves')
+onready var waves = get_parent().get_parent().get_node('Waves')
 
 var depth_before_submerged = 1.0
 var displacement_amount = 3.0
@@ -17,17 +17,14 @@ func _ready():
 		if c.get_script() == get_script():
 			floater_count += 1
 
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	var positionOrigin = get_global_transform().origin
 	var world_coord_offset = positionOrigin - get_parent().translation
 	
-	# Gravity
 	get_parent().add_force(Vector3.DOWN * 9.8, world_coord_offset)
 	
-	#var wave = ocean.get_wave(positionOrigin.x, positionOrigin.z)
-	var wave = ocean.get_displace(Vector2(positionOrigin.x, positionOrigin.z))
-	var wave_height = wave.y / 2.0
+	var disp = waves.get_displace(positionOrigin)
+	var wave_height = disp.y / 2.0
 	var height = positionOrigin.y
 	
 	if height < wave_height:
