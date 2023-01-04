@@ -52,7 +52,7 @@ func _process(delta):
 	counter -= delta
 	if counter <= 0:
 		var cube_map = cube_cam_inst.update_cube_map()
-		material_override.set_shader_param('environment', cube_map)
+		material_override.set_shader_param('world', cube_map)
 		counter = INF
 	
 	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * 10)
