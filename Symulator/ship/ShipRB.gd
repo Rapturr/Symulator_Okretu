@@ -17,19 +17,21 @@ func _process(_delta):
 	var wind = waves.windDirection
 	
 	input_vector = Vector3.ZERO
-	input_vector.x = Input.get_action_strength("steer_left") - Input.get_action_strength("steer_right")
+	#input_vector.x = Input.get_action_strength("steer_left") - Input.get_action_strength("steer_right")
+	input_vector.x = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
 	input_vector = input_vector.normalized()
 	
-	var shipRotation = shipDirection.rotated(-rotation.y)
-	if shipRotation.y >= wind.y and shipRotation.y <= wind.y+0.1:
-		print("Ship rotation == Wind direction")
+	#Rotation times WindDirection times (gear+0.1)
+	var shipRotation = shipDirection.rotated(rotation.y)
+	#if shipRotation.y >= wind.y and shipRotation.y <= wind.y+0.1:
+	#	print("Ship rotation == Wind direction")
 	
 	var forward_force = Vector2(0.2,0).rotated(-rotation.y+90)
 	forward_force += wind
 	var moving_force = Vector3(forward_force.x,0,forward_force.y) * MAX_SPEED * Vector3(wind.x,0,wind.y)*gear
 	add_central_force(Vector3(forward_force.x, 0, forward_force.y)*MAX_SPEED*gear)
 	add_torque(Vector3(0,input_vector.x*100,0))
-	if Input.is_action_just_pressed("lower"):
+	if Input.is_action_just_pressed("ui_home"):
 		currentSpeed = sqrt(linear_velocity.x*linear_velocity.x+linear_velocity.y*linear_velocity.y)
 		print("Wiatr = ",wind.x)
 		print("moving_force = ",moving_force)
