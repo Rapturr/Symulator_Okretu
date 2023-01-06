@@ -19,6 +19,7 @@ steepness = 0.01
 wind_align = 0.12
 
 [node name="Ship" parent="." instance=ExtResource( 5 )]
+mass = 1.31122
 
 [node name="SimSettings" parent="." instance=ExtResource( 2 )]
 
@@ -26,7 +27,7 @@ wind_align = 0.12
 transform = Transform( 8, 0, 0, 0, 10, 0, 0, 0, 8, 15.9634, -4.2971, 173 )
 
 [node name="Rock2" parent="." instance=ExtResource( 4 )]
-transform = Transform( 10, 0, 0, 0, 15, 0, 0, 0, 10, -41.4185, -4.2971, 116.413 )
+transform = Transform( 10, 0, 0, 0, 15, 0, 0, 0, 10, -41.4185, 1.06488, 116.413 )
 
 [node name="Rock3" parent="." instance=ExtResource( 4 )]
 transform = Transform( 10, 0, 0, 0, 15, 0, 0, 0, 10, -185.119, -4.2971, 146.814 )

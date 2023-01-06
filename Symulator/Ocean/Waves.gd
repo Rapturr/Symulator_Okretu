@@ -58,28 +58,28 @@ func _process(delta):
 	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * 10)
 	setable = true
 
-func setWavelength(value):
-	wavelength = value
+func setWavelength(val):
+	wavelength = val
 	if setable:
 		updateWaves()
 
-func set_steepness(value):
-	steepness = value
+func set_steepness(val):
+	steepness = val
 	if setable:
 		updateWaves()
 
-func setHeight(value):
-	waveheight = value
+func setHeight(val):
+	waveheight = val
 	if setable:
 		updateWaves()
 
-func setWindDirection(value):
-	windDirection = value
+func setWindDirection(val):
+	windDirection = val
 	if setable:
 		updateWaves()
 
-func set_wind_align(value):
-	wind_align = value
+func set_wind_align(val):
+	wind_align = val
 	if setable:
 		updateWaves()
 

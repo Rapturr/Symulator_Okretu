@@ -42,7 +42,6 @@ material/5 = SubResource( 8 )
 
 [node name="ShipCollisionconvShape" type="CollisionShape" parent="."]
 transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, -3.9206, 0 )
-visible = false
 shape = SubResource( 1 )
 
 [node name="Buoy" parent="." instance=ExtResource( 3 )]
