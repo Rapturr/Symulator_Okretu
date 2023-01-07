@@ -60,3 +60,17 @@ func _process(_delta):
 	elif Input.is_action_pressed("ui_down") and gear > 0.11:
 		gear -= 0.01
 	
+
+
+func _on_Area_body_entered(body):
+	if body.is_in_group("Rock"):
+		get_tree().paused = true
+		get_parent().get_node("Reset").visible = true
+	pass # Replace with function body.
+
+
+func _on_ResetButton_pressed():
+	get_tree().paused = false
+	get_parent().get_node("Reset").visible = false
+	translation = Vector3(0,0,0)
+	pass # Replace with function body.
