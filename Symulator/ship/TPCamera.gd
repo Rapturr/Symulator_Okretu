@@ -21,6 +21,11 @@ func _physics_process(_delta):
 		else:
 			mouse_movable = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+	
+	#var parentRotation = get_parent().get_rotation()
+	#$helper.rotate_x(deg2rad(parentRotation.x))
+	#rotation.x -= deg2rad(parentRotation.x)
 
 func _input(event):
 	if event is InputEventMouseMotion:

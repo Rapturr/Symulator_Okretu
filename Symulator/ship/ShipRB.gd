@@ -35,7 +35,7 @@ func _process(_delta):
 		shipRotation.y *= -1
 	
 	
-	var calculatedMovement = (shipRotation*wind+wind)*gear
+	var calculatedMovement = (shipRotation*wind+wind/2+shipRotation)*gear
 	#if shipRotation.y >= wind.y and shipRotation.y <= wind.y+0.1:
 	#	print("Ship rotation == Wind direction")
 	
