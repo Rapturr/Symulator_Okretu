@@ -130,4 +130,4 @@ func updateWaves():
 		image.set_pixel(4, i, Color(waves[i]['frequency'], 0,0,0))
 	image.unlock()
 	waveTexture.create_from_image(image, 0)
-	material_override.set_shader_param('waves', waveTexture)
+	material_override.set_shader_param('wavesMyTex', waveTexture)

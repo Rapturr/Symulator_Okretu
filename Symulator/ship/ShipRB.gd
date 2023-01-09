@@ -28,14 +28,15 @@ func _process(_delta):
 #		wind.x /= 2
 #	if shipRotation.y + wind.y <= shipRotation.y:
 #		wind.y /= 2
-	
+	var shipDir = shipRotation*2
+	shipDir.x = -shipDir.x
 	if shipRotation.x < 0:
 		shipRotation.x *= -1
 	if shipRotation.y < 0:
 		shipRotation.y *= -1
 	
 	
-	var calculatedMovement = (shipRotation*wind+wind/2+shipRotation)*gear
+	var calculatedMovement = (shipRotation*wind+wind/2+shipDir*abs(wind.x+wind.y))*gear
 	#if shipRotation.y >= wind.y and shipRotation.y <= wind.y+0.1:
 	#	print("Ship rotation == Wind direction")
 	
@@ -57,7 +58,7 @@ func _process(_delta):
 	
 	if Input.is_action_pressed("ui_up") and gear < 1.0:
 		gear += 0.01
-	elif Input.is_action_pressed("ui_down") and gear > 0.11:
+	elif Input.is_action_pressed("ui_down") and gear > 0.8:
 		gear -= 0.01
 	
 
