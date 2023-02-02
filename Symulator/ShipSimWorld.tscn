@@ -4,8 +4,8 @@
 [ext_resource path="res://Ocean/SimSettings.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Ocean/waves_shader.tres" type="Material" id=3]
 [ext_resource path="res://Ocean/Restart Button.png" type="Texture" id=4]
-[ext_resource path="res://ship/ShipRB.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Ocean/Rock.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ship/ShipScene.tscn" type="PackedScene" id=7]
 
 [node name="ShipSimWorld" type="Node"]
 
@@ -31,12 +31,8 @@ transform = Transform( 1, 0, 0, 0, -0.417027, 0.908894, 0, -0.908894, -0.417027,
 pause_mode = 2
 material_override = ExtResource( 3 )
 script = ExtResource( 1 )
-wavelength = 50.0
-steepness = 0.01
-wind_align = 0.12
 
-[node name="Ship" parent="." instance=ExtResource( 5 )]
-mass = 1.31122
+[node name="Ship2" parent="." instance=ExtResource( 7 )]
 
 [node name="SimSettings" parent="." instance=ExtResource( 2 )]
 
@@ -55,5 +51,3 @@ margin_right = 1059.0
 margin_bottom = 1049.0
 rect_scale = Vector2( 0.1, 0.1 )
 icon = ExtResource( 4 )
-
-[connection signal="pressed" from="Reset/ResetButton" to="Ship" method="_on_ResetButton_pressed"]

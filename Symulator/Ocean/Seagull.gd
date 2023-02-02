@@ -1,13 +1,13 @@
 tool
 extends Spatial
 
-func ready():
+func _ready():
 	for i in get_children():
 		i.size = Vector2(256, 256)
 		i.own_world = true
 
-func update_cube_map():
-	var images = {
+func update_seagull():
+	var cubeSides = {
 		'Front': CubeMap.SIDE_FRONT,
 		'Back': CubeMap.SIDE_BACK,
 		'Left': CubeMap.SIDE_LEFT,
@@ -15,12 +15,12 @@ func update_cube_map():
 		'Top': CubeMap.SIDE_TOP,
 		'Bottom': CubeMap.SIDE_BOTTOM
 	}
-	var cube_map = CubeMap.new()
+	var seagull = CubeMap.new()
 	
 	for i in get_children():
-		if i.name in images:
+		if i.name in cubeSides:
 			var img = Image.new()
 			img.copy_from(i.get_texture().get_data())
-			cube_map.set_side(images[i.name], img)
+			seagull.set_side(cubeSides[i.name], img)
 	
-	return cube_map
+	return seagull

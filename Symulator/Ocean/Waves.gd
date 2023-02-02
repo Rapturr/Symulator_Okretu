@@ -3,38 +3,30 @@ extends ImmediateGeometry
 
 const WAVESNUM = 10;
 
-export(float, 0, 1) var waveheight = 1.0 setget setHeight
-export(float, 10, 100) var wavelength = 10.0 setget setWavelength
-export(float, 0, 1) var steepness = 0.1 setget set_steepness
-export(Vector2) var windDirection = Vector2(1, 0) setget setWindDirection
-export(float, 0, 1) var wind_align = 0.0 setget set_wind_align
+var waveheight = 1.0 setget setHeight
+var wavelength = 10.0 setget setWavelength
+var steepness = 0.1 setget set_steepness
+var windDirection = Vector2(1, 0) setget setWindDirection
 
-var res = 124.0
+var res = 128.0
 var setable = false
 
 var counter = 0.5
-var cube_cam = preload("res://Ocean/Seagull.tscn")
-var cube_cam_inst;
+var seagull = preload("res://Ocean/Seagull.tscn")
+var seagull_inst;
 
 var waves = []
 var waveTexture = ImageTexture.new()
 
 func _ready():
-	
-	for j in range(res):
-		var y = j/res - 0.5
-		var n_y = (j+1)/res - 0.5
+	for i in range(res):
+		var y = i/res - 0.5
+		var y2 = (i+1)/res - 0.5
 		begin(Mesh.PRIMITIVE_TRIANGLE_STRIP)
-		for i in range(res):
-			var x = i/res - 0.5
-			
-			#var new_x = x 
-			#var new_y = y
-			
-			add_vertex(Vector3(x*2, 0, -y*2))
-			
-			#new_y = n_y - translation.z
-			add_vertex(Vector3(x*2, 0, -n_y*2))
+		for j in range(res):
+			var x = j/res - 0.5
+			add_vertex(Vector3(x*4, 0, -y*4))
+			add_vertex(Vector3(x*4, 0, -y2*4))
 		end()
 	begin(Mesh.PRIMITIVE_POINTS)
 	add_vertex(-Vector3(1,1,1)*pow(2,32))
@@ -44,19 +36,20 @@ func _ready():
 	waveTexture = ImageTexture.new()
 	updateWaves()
 	
-	cube_cam_inst = cube_cam.instance()
-	add_child(cube_cam_inst)
+	seagull_inst = seagull.instance()
+	add_child(seagull_inst)
+	setable = true
 
 
 func _process(delta):
 	counter -= delta
 	if counter <= 0:
-		var cube_map = cube_cam_inst.update_cube_map()
+		var cube_map = seagull_inst.update_seagull()
 		material_override.set_shader_param('world', cube_map)
-		counter = INF
+		counter = 0.5
 	
-	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/1000.0 * 10)
-	setable = true
+	material_override.set_shader_param('time_offset', OS.get_ticks_msec()/100.0)
+
 
 func setWavelength(val):
 	wavelength = val
@@ -78,14 +71,9 @@ func setWindDirection(val):
 	if setable:
 		updateWaves()
 
-func set_wind_align(val):
-	wind_align = val
-	if setable:
-		updateWaves()
 
 func movedByWave(position):
 	var dispPosition = Vector3.ZERO
-	
 	var hz
 	var ht
 	var steep
@@ -110,7 +98,7 @@ func updateWaves():
 	waves.clear()
 	for _i in range(WAVESNUM):
 		var randWavelen = rand_range(wavelength/2.0, wavelength*2.0)
-		var rotWindDir = windDirection.rotated(rand_range(-PI, PI)*(1-wind_align))
+		var rotWindDir = windDirection.rotated(rand_range(-PI, PI))
 		
 		waves.append({
 			'waveheight': waveheight / wavelength * randWavelen,
