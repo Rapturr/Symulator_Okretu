@@ -9,7 +9,7 @@ func _process(_delta):
 		match i.name:
 			"WAVEHEIGHT": waves.setHeight($VBP/WAVEHEIGHT/HSlider.value)
 			"DISTANCE": waves.setWavelength($VBP/DISTANCE/HSlider.value)
-			"ST": waves.set_steepness($VBP/ST/HSlider.value)
+			"ST": waves.setSteepness($VBP/ST/HSlider.value)
 			"WINDX": windDir.x = $VBP/WINDX/HSlider.value
 			"WINDY": windDir.y = $VBP/WINDY/HSlider.value
 	waves.setWindDirection(windDir)

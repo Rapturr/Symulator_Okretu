@@ -33,6 +33,7 @@ material_override = ExtResource( 3 )
 script = ExtResource( 1 )
 
 [node name="Ship2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="SimSettings" parent="." instance=ExtResource( 2 )]
 
@@ -51,3 +52,5 @@ margin_right = 1059.0
 margin_bottom = 1049.0
 rect_scale = Vector2( 0.1, 0.1 )
 icon = ExtResource( 4 )
+
+[connection signal="pressed" from="Reset/ResetButton" to="Ship2" method="_on_ResetButton_pressed"]

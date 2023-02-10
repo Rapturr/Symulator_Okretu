@@ -5,73 +5,84 @@ const MAX_SPEED = 124
 
 var gear = 1.0
 
-var velocity = Vector3.ZERO
 var input_vector = Vector3.ZERO
 
-var currentSpeed = 0;
-
 var shipDirection = Vector2(0,1)
+
+var health = 100.0
+
+var canTakeDamage = true
+
+onready var damageTimer = $damageTimer
 
 func _process(_delta):
 	var waves = get_parent().get_node('Waves')
 	var wind = waves.windDirection
 	
-	input_vector = Vector3.ZERO
-	#input_vector.x = Input.get_action_strength("steer_left") - Input.get_action_strength("steer_right")
-	input_vector.x = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
-	input_vector = input_vector.normalized()
+	moveShip(wind)
 	
-	
-	var shipRotation = shipDirection.rotated(rotation.y)
-	
-#	if shipRotation.x + wind.x <= shipRotation.x:
-#		wind.x /= 2
-#	if shipRotation.y + wind.y <= shipRotation.y:
-#		wind.y /= 2
-	var shipDir = shipRotation*2
-	shipDir.x = -shipDir.x
-	if shipRotation.x < 0:
-		shipRotation.x *= -1
-	if shipRotation.y < 0:
-		shipRotation.y *= -1
-	
-	
-	var calculatedMovement = (shipRotation*wind+wind/2+shipDir*abs(wind.x+wind.y))*gear
-	#if shipRotation.y >= wind.y and shipRotation.y <= wind.y+0.1:
-	#	print("Ship rotation == Wind direction")
-	
-	#var forward_force = Vector2(0.2,0).rotated(-rotation.y+90)
-	#forward_force += wind
-	var moving_force = Vector3(calculatedMovement.x,0,calculatedMovement.y) * MAX_SPEED * Vector3(wind.x,0,wind.y)*gear
-	add_central_force(Vector3(calculatedMovement.x, 0, calculatedMovement.y)*MAX_SPEED*gear)
-	add_torque(Vector3(0,input_vector.x*100,0))
-	if Input.is_action_just_pressed("ui_home"):
-		currentSpeed = sqrt(linear_velocity.x*linear_velocity.x+linear_velocity.y*linear_velocity.y)
-		print("Wiatr = ",wind.x)
-		print("moving_force = ",moving_force)
-		print("speed = ",currentSpeed)
-		print("Ship rotation X = ",shipRotation.x)
-		print("Ship rotation Y = ",shipRotation.y)
-		print("Wind direction X = ",wind.x)
-		print("Wind direction Y= ",wind.y)
-		print("Gear= ",gear)
+	if translation.y < -10:
+		shipWreck()
 	
 	if Input.is_action_pressed("ui_up") and gear < 1.0:
 		gear += 0.01
 	elif Input.is_action_pressed("ui_down") and gear > 0.8:
 		gear -= 0.01
-	
 
+func moveShip(wind):
+	var shipRotation = shipDirection.rotated(-rotation.y)
+	var windSpeed = sqrt(wind.x*wind.x + wind.y*wind.y)
+	var windNormal = wind.normalized()
+	var shipRotationNormal = shipRotation.normalized()
+	
+	var checkRel = Vector2(shipRotationNormal.x - windNormal.x,shipRotationNormal.y - windNormal.y)
+	var chechLen = checkRel.length()
+	
+	var calculatedMovement = (shipRotation * windSpeed)*gear
+	if chechLen > 0.25 or chechLen < -0.25:
+		add_central_force(Vector3(calculatedMovement.x, 0, calculatedMovement.y)*MAX_SPEED)
+	else:
+		add_central_force(Vector3(-calculatedMovement.x/3, 0, -calculatedMovement.y/3))
+
+	input_vector = Vector3.ZERO
+	input_vector.x = Input.get_action_strength("steer_left") - Input.get_action_strength("steer_right")
+	input_vector = input_vector.normalized()
+	
+	add_torque(Vector3(0,input_vector.x*2 * linear_velocity.length(),0))
+
+func sailControl():
+	if Input.is_action_pressed("ui_up") and gear < 1.0:
+		gear = min(gear+0.01, 1.0)
+	elif Input.is_action_pressed("ui_down") and gear > 0.8:
+		gear = min(gear-0.01, 0.7)
 
 func _on_Area_body_entered(body):
 	if body.is_in_group("Rock"):
-		get_tree().paused = true
-		get_parent().get_node("Reset").visible = true
-	pass # Replace with function body.
+		takedamage(5 * linear_velocity.length())
 
+func takedamage(val):
+	health = max(health-val, 0)
+	damageTimer.start(5)
+	if health == 0:
+		shipWreck()
 
 func _on_ResetButton_pressed():
+	resetShip()
+	
+func resetShip():
 	get_tree().paused = false
 	get_parent().get_node("Reset").visible = false
-	translation = Vector3(0,0,0)
-	pass # Replace with function body.
+	linear_velocity = Vector3.ZERO
+	transform.origin = Vector3.ZERO
+	health = 100.0
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	return true
+
+func shipWreck():
+	get_tree().paused = true
+	get_parent().get_node("Reset").visible = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	return true
+
+func _on_damageTimer_timeout():
+	canTakeDamage = true

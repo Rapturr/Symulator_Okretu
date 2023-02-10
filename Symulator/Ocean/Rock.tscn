@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.935025
+radius = 2.13121
 
 [sub_resource type="OpenSimplexNoise" id=2]
 seed = 13

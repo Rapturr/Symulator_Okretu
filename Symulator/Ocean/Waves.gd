@@ -3,10 +3,10 @@ extends ImmediateGeometry
 
 const WAVESNUM = 10;
 
-var waveheight = 1.0 setget setHeight
-var wavelength = 10.0 setget setWavelength
-var steepness = 0.1 setget set_steepness
-var windDirection = Vector2(1, 0) setget setWindDirection
+var waveheight = 1.0
+var wavelength = 10.0
+var steepness = 0.1
+var windDirection = Vector2(1, 0)
 
 var res = 128.0
 var setable = false
@@ -52,25 +52,31 @@ func _process(delta):
 
 
 func setWavelength(val):
-	wavelength = val
+	val = min(100, val)
+	wavelength = max(val, 10)
 	if setable:
 		updateWaves()
 
-func set_steepness(val):
-	steepness = val
+func setSteepness(val):
+	val = min(0.7, val)
+	steepness = max(val, 0)
 	if setable:
 		updateWaves()
 
 func setHeight(val):
-	waveheight = val
+	val = min(1, val)
+	waveheight = max(val, 0)
 	if setable:
 		updateWaves()
 
 func setWindDirection(val):
+	val.x = min(val.x, 1)
+	val.x = max(val.x, -1)
+	val.y = min(val.y, 1)
+	val.y = max(val.y, -1)
 	windDirection = val
 	if setable:
 		updateWaves()
-
 
 func movedByWave(position):
 	var dispPosition = Vector3.ZERO

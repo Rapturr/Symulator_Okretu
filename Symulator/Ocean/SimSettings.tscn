@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Ocean/SimulationSettings.gd" type="Script" id=1]
-[ext_resource path="res://Ocean/busola.png" type="Texture" id=2]
 
 [node name="SimSettings" type="Panel"]
 margin_right = 282.0
@@ -111,31 +110,3 @@ size_flags_horizontal = 3
 min_value = -1.0
 max_value = 1.0
 step = 0.01
-
-[node name="WINDALIGNMENT" type="HBoxContainer" parent="VBP"]
-visible = false
-margin_top = 100.0
-margin_right = 266.0
-margin_bottom = 116.0
-
-[node name="Label" type="Label" parent="VBP/WINDALIGNMENT"]
-margin_top = 1.0
-margin_right = 119.0
-margin_bottom = 15.0
-text = "WINDALIGNMENT:"
-
-[node name="HSlider" type="HSlider" parent="VBP/WINDALIGNMENT"]
-margin_left = 123.0
-margin_right = 266.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="Windmeter" type="TextureRect" parent="."]
-visible = false
-margin_left = 1.0
-margin_top = 132.0
-margin_right = 257.0
-margin_bottom = 388.0
-texture = ExtResource( 2 )
